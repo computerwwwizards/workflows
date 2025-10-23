@@ -29,6 +29,7 @@ export async function getInformationReport(options: getInformationReportOptions)
                             nodes {
                                 login
                                 name
+                                email
                                 pullRequests(first: 10, orderBy: {field: CREATED_AT, direction: DESC}) {
                                     nodes {
                                       title
@@ -59,8 +60,9 @@ export async function getInformationReport(options: getInformationReportOptions)
   return data.data.organization.team.members.nodes
     .filter(Boolean)
     .filter(({ login }) => !exclusions.has(login))
-    .map(({ login, pullRequests }): UserActivity => ({
+    .map(({ login, email, pullRequests }): UserActivity => ({
       username: login,
+      email: email,
       hasActivityToday: !!pullRequests.nodes
         .filter(Boolean)
         .find(({ createdAt }) => isToday(new Date(createdAt)))

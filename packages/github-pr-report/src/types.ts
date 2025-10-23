@@ -6,6 +6,7 @@ export interface getInformationReportOptions {
 
 export interface UserActivity {
   username: string;
+  email: string | null;
   hasActivityToday: boolean;
 }
 
@@ -22,6 +23,8 @@ export interface GitHubTeamPRsResponse {
         members: {
           nodes: Array<{
             login: string;
+            name?: string;
+            email: string | null;
             pullRequests: {
               nodes: Array<{
                 title: string;
