@@ -3,13 +3,14 @@ import Papa from 'papaparse';
 import { UserActivity } from '../types';
 
 export async function saveReport(activities: UserActivity[]): Promise<void> {
-  const data = activities.map(({ username, hasActivityToday }): [string, boolean] => [
+  const data = activities.map(({ username, hasActivityToday, email }): [string, string | null, boolean] => [
     username,
+    email,
     hasActivityToday
   ]);
 
   const csv = Papa.unparse({
-    fields: ["Name", "Has made a pr"],
+    fields: ["Name", "Email", "Has made a pr"],
     data
   });
 
